@@ -9,14 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.veva.veva.User.model.Origin;
 import com.veva.veva.User.model.User;
 
+@Component
+@Transactional
 public class UserRepository implements DAO<User> {
 
-    private static final String getListSql = "SELECT user_id, username, email, password, origin from users";
-    private static final String getItemSql = "SELECT user_id, username, email, password, origin from users where user_id = ?";
+    private static final String getListSql = "SELECT * from users";
+    private static final String getItemSql = "SELECT * from users where user_id = ?";
     private static final String saveItemSql = "insert into users(username, email, password, origin) values (?, ?, ?, ?)";
     private static final String updateItemSql = "update users set username = ?, email = ?, password = ?, origin = ? where user_id = ?";
     private static final String deleteItemSql = "delete from users where user_id = ?";
@@ -47,13 +52,14 @@ public class UserRepository implements DAO<User> {
 
     @Override
     public List<User> getAll() {
-        return jdbcTemplate.query(getItemSql, rowMapper);
+        return jdbcTemplate.query(getListSql, rowMapper);
     }
 
     @Override
     public boolean save(User user) {
         //user_id, username, email, password, origin
-        int changes = jdbcTemplate.update(saveItemSql, user.getUserId(), user.getUsername(), user.getEmail(), user.getPassword(), user.getOrigin());
+        int changes = jdbcTemplate.update(saveItemSql, user.getUsername(), user.getEmail(), user.getPassword(), user.getOrigin().toString());
+        System.out.println("changes made on save: " + changes);
         return changes == 1 ? true : false;
     }
 
@@ -61,7 +67,8 @@ public class UserRepository implements DAO<User> {
     public Optional<User> getById(int user_id) {
         User user = null;
         try {
-            user = jdbcTemplate.queryForObject(getItemSql, User.class, user_id);
+            //user = jdbcTemplate.queryForObject(getItemSql, User.class, user_id);
+            user = jdbcTemplate.queryForObject(getItemSql, rowMapper, user_id);
         } catch (DataAccessException exp) {
             log.info("User with user id " + user_id + " not found");
         }
@@ -70,13 +77,16 @@ public class UserRepository implements DAO<User> {
 
     @Override
     public boolean updateById(User user, int user_id) {
-        int changes = jdbcTemplate.update(updateItemSql, user.getUsername(), user.getEmail(), user.getPassword(), user.getOrigin(), user.getUserId());
+        int changes = jdbcTemplate.update(updateItemSql, user.getUsername(), user.getEmail(), user.getPassword(), user.getOrigin().toString(), user_id);
+        //int changes = jdbcTemplate.update(updateItemSql, user.getUsername() user.getUserId());
+        System.out.println("changes made on update: " + changes);
         return changes == 1 ? true : false;
     }
 
     @Override
     public boolean deleteById(int user_id) {
         int changes = jdbcTemplate.update(deleteItemSql, user_id);
+        System.out.println("changes made on delete: " + changes);
         return changes == 1 ? true : false;
     }    
 }
