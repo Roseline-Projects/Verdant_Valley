@@ -31,7 +31,7 @@ public class UserRepository implements DAO<User> {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    RowMapper<User> rowMapper = (resultSet, rowNumber) -> {
+    private RowMapper<User> rowMapper = (resultSet, rowNumber) -> {
         User user = new User();
         user.setUserId(resultSet.getInt("user_id"));
         user.setEmail(resultSet.getString("email"));
