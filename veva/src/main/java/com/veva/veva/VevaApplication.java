@@ -10,13 +10,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.veva.veva.User.model.Origin;
 import com.veva.veva.User.model.User;
 import com.veva.veva.User.repository.UserRepository;
+import com.veva.veva.User.service.UserService;
 
 @SpringBootApplication
 public class VevaApplication {
 
 	private static UserRepository userRepository;
-	public VevaApplication(UserRepository userRepository) {
+	private static UserService userService;
+	public VevaApplication(UserRepository userRepository, UserService userService) {
 		this.userRepository = userRepository;
+		this.userService = userService;
 	}
 
 	public static void main(String[] args) {
@@ -32,7 +35,7 @@ public class VevaApplication {
 
 		System.out.println("Adding another");
 		User secondUser = new User("2nd", "2nd email", "2nd pass", Origin.FOREST_ELF);
-		userRepository.save(secondUser);
+		userService.createUser("2nd", "2nd email from service", "second pass", "FOREST_ELF");
 
 		users = userRepository.getAll();
 		users.forEach(System.out::println);

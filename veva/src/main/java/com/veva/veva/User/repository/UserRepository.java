@@ -18,7 +18,7 @@ import com.veva.veva.User.model.User;
 
 @Component
 @Transactional
-public class UserRepository implements DAO<User> {
+public class UserRepository implements IUserRepository {
 
     private static final String getListSql = "SELECT * from users";
     private static final String getItemSql = "SELECT * from users where user_id = ?";
@@ -39,7 +39,6 @@ public class UserRepository implements DAO<User> {
         user.setPassword(resultSet.getString("password"));
         String originString = resultSet.getString("origin");
 
-        //Arrays.stream(Origin.class.getEnumConstants()).filter(origin -> origin.toString().equals(originString)).toArray()[0];
         for(Origin o : Origin.class.getEnumConstants()) {
             if(o.toString().equals(originString)) {
                 user.setOrigin(o);
@@ -59,7 +58,7 @@ public class UserRepository implements DAO<User> {
     public boolean save(User user) {
         //user_id, username, email, password, origin
         int changes = jdbcTemplate.update(saveItemSql, user.getUsername(), user.getEmail(), user.getPassword(), user.getOrigin().toString());
-        System.out.println("changes made on save: " + changes);
+        //System.out.println("changes made on save: " + changes);
         return changes == 1 ? true : false;
     }
 
@@ -86,7 +85,6 @@ public class UserRepository implements DAO<User> {
     @Override
     public boolean deleteById(int user_id) {
         int changes = jdbcTemplate.update(deleteItemSql, user_id);
-        System.out.println("changes made on delete: " + changes);
         return changes == 1 ? true : false;
     }    
 }
