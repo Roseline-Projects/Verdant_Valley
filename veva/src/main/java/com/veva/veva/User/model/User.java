@@ -33,7 +33,7 @@ public class User {
     public User(String username, String email, String password, Origin origin) {
         this.username = username;
         this.email = email;
-        this.password = password;
+        this.password = password; //plaintext password storage is temporary
         this.origin = origin;
     }
 

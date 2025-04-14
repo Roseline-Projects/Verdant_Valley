@@ -10,7 +10,6 @@ import com.veva.veva.User.util.UserNotFoundException;
 
 @Service
 public class UserService {
-
     private final IUserRepository userRepository;
 
     UserService(IUserRepository userRepository) {
@@ -31,7 +30,7 @@ public class UserService {
 
     public boolean updateUser(User user, int userId) {
         boolean success = userRepository.updateById(user, userId);
-        if(success == false) {
+        if(success == false) { //repeated code - see if there's a better way to do this
             throw new UserNotFoundException(userId);
         }
         return success;
