@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.veva.veva.User.model.User;
 
-@Repository
 public interface IUserRepository extends DAO<User> { //this doesn't seem correct
 
     List<User> getAll();

@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.veva.veva.User.model.Origin;
 import com.veva.veva.User.model.User;
 
-@Component
+@Repository
 @Transactional
 public class UserRepository implements IUserRepository {
 
