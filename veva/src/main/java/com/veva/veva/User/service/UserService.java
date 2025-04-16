@@ -1,5 +1,7 @@
 package com.veva.veva.User.service;
 
+import java.util.List;
+
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,10 @@ public class UserService {
 
     UserService(IUserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.getAll();
     }
 
     //using data coming in from frontend request, make a user

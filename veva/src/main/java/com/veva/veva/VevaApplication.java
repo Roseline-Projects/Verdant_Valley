@@ -25,40 +25,40 @@ public class VevaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(VevaApplication.class, args);
 
-		System.out.println("Testing database----------------------");
-		User newUser = new User("testing", "testing@someemail", "hello", Origin.HUMAN);
-		userRepository.save(newUser);
+		// System.out.println("Testing database----------------------");
+		// User newUser = new User("testing", "testing@someemail", "hello", Origin.HUMAN);
+		// userRepository.save(newUser);
 
-		System.out.println("Adding user------------------");
-		List<User> users = userRepository.getAll();
-		users.forEach(System.out::println);
+		// System.out.println("Adding user------------------");
+		// List<User> users = userRepository.getAll();
+		// users.forEach(System.out::println);
 
-		System.out.println("Adding another");
-		User secondUser = new User("2nd", "2nd email", "2nd pass", Origin.FOREST_ELF);
-		userService.createUser("2nd", "2nd email from service", "second pass", "FOREST_ELF");
+		// System.out.println("Adding another");
+		// User secondUser = new User("2nd", "2nd email", "2nd pass", Origin.FOREST_ELF);
+		// userService.createUser("2nd", "2nd email from service", "second pass", "FOREST_ELF");
 
-		users = userRepository.getAll();
-		users.forEach(System.out::println);
+		// users = userRepository.getAll();
+		// users.forEach(System.out::println);
 
-		System.out.println("Getting a user------------------------------");
-		Optional<User> retrieved = userRepository.getById(1);
-		System.out.println("Retrieved: " + retrieved);
+		// System.out.println("Getting a user------------------------------");
+		// Optional<User> retrieved = userRepository.getById(1);
+		// System.out.println("Retrieved: " + retrieved);
 
-		System.out.println("Updating a user --------------");
-		newUser.setPassword("new password!!");
-		newUser.setUsername("new username");
-		newUser.setOrigin(Origin.MAGE);
+		// System.out.println("Updating a user --------------");
+		// newUser.setPassword("new password!!");
+		// newUser.setUsername("new username");
+		// newUser.setOrigin(Origin.MAGE);
 
-		userRepository.updateById(newUser, 1);
+		// userRepository.updateById(newUser, 1);
 
-		users = userRepository.getAll();
-		users.forEach(System.out::println);
+		// users = userRepository.getAll();
+		// users.forEach(System.out::println);
 
-		System.out.println("Deleting the user -----------------------");
-		userRepository.deleteById(2);
+		// System.out.println("Deleting the user -----------------------");
+		// userRepository.deleteById(2);
 
-		users = userRepository.getAll();
-		users.forEach(System.out::println);
+		// users = userRepository.getAll();
+		// users.forEach(System.out::println);
 	}
 
 }

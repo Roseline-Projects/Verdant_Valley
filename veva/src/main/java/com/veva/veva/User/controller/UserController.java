@@ -33,8 +33,7 @@ public class UserController {
 
     @GetMapping("/getAll") //debugging 
     public List<User> getAllUsers() {
-        List<User> empty = null;
-        return empty;
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
@@ -61,5 +60,5 @@ public class UserController {
     @DeleteMapping("/{id}/deleteAccount")
     public void deleteAccount(@PathVariable Integer id) {
         userService.deleteUser(id);
-    }   
+    }
 }
